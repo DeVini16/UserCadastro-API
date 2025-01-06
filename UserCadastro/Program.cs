@@ -11,9 +11,20 @@ builder.Logging.AddConsole();
 builder.Services.AddDbContext<CadastroContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Adicionar o Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+// Usar o Swagger e Swagger UI
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger(); // Gera o Swagger
+    app.UseSwaggerUI(); // Interface do Swagger UI
+}
 
 app.MapControllers();
 
